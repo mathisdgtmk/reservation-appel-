@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnostic business digital — Réserve ton créneau</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#eef4f8;
+    --paper-line:#dde8f0;
+    --ink:#1b3a5c;
+    --ink-soft:#4a7ba6;
+    --grid:rgba(27,58,92,0.07);
+    --accent:#ff6a3d;
+    --accent-dark:#e0511f;
+    --white:#ffffff;
+    --max:920px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size:32px 32px;
+  }
+
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px;}
+
+  /* ===== HERO ===== */
+  .hero{
+    padding:64px 24px 40px;
+    max-width:var(--max);
+    margin:0 auto;
+  }
+
+  .tag{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    border:1px solid var(--paper-line);
+    background:var(--white);
+    padding:6px 12px;
+    border-radius:2px;
+  }
+  .tag::before{
+    content:'';
+    width:6px;height:6px;
+    background:var(--accent);
+    border-radius:50%;
+    display:inline-block;
+  }
+
+  h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:clamp(2.4rem, 6vw, 4.2rem);
+    line-height:1.08;
+    margin:24px 0 20px;
+    letter-spacing:-0.01em;
+  }
+  h1 .accent{color:var(--accent);}
+
+  .hero p.lead{
+    font-size:1.05rem;
+    max-width:520px;
+    color:var(--ink-soft);
+    margin-bottom:36px;
+  }
+
+  /* ===== BLUEPRINT DIAGRAM ===== */
+  .diagram{
+    margin:40px 0 8px;
+    width:100%;
+    overflow-x:auto;
+  }
+  .diagram svg{
+    width:100%;
+    height:auto;
+    display:block;
+    min-width:560px;
+  }
+  .diagram-caption{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-top:10px;
+    text-align:right;
+  }
+
+  /* ===== SECTIONS ===== */
+  section{
+    padding:56px 24px;
+    max-width:var(--max);
+    margin:0 auto;
+  }
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:16px;
+    margin-bottom:36px;
+    border-bottom:1px solid var(--paper-line);
+    padding-bottom:16px;
+  }
+  .section-num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    color:var(--accent);
+    letter-spacing:0.05em;
+  }
+  .section-head h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:1.6rem;
+    font-weight:600;
+  }
+
+  /* ===== STEPS ===== */
+  .steps{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:0;
+    border:1px solid var(--paper-line);
+    background:var(--white);
+  }
+  .step{
+    padding:28px 24px;
+    border-right:1px solid var(--paper-line);
+    position:relative;
+  }
+  .step:last-child{border-right:none;}
+  .step .n{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+    letter-spacing:0.1em;
+    margin-bottom:14px;
+    display:block;
+  }
+  .step h3{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:1.05rem;
+    margin-bottom:8px;
+  }
+  .step p{font-size:0.92rem;color:var(--ink-soft);}
+
+  @media (max-width:720px){
+    .steps{grid-template-columns:1fr;}
+    .step{border-right:none;border-bottom:1px solid var(--paper-line);}
+    .step:last-child{border-bottom:none;}
+  }
+
+  /* ===== BOOKING ===== */
+  .booking-frame{
+    border:1px solid var(--paper-line);
+    background:var(--white);
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .booking-frame .label-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 18px;
+    border-bottom:1px solid var(--paper-line);
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .label-bar span.dur{color:var(--accent);}
+
+  .booking-body{
+    padding:28px;
+  }
+
+  .picker-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-bottom:12px;
+    display:block;
+  }
+
+  .day-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:28px;
+  }
+  .slot-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:28px;
+  }
+
+  .pill{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:0.9rem;
+    font-weight:500;
+    padding:10px 18px;
+    border:1px solid var(--paper-line);
+    background:var(--paper);
+    color:var(--ink);
+    border-radius:2px;
+    cursor:pointer;
+    transition:border-color 0.12s ease, background 0.12s ease, color 0.12s ease;
+  }
+  .pill:hover{border-color:var(--ink-soft);}
+  .pill.selected{
+    background:var(--ink);
+    border-color:var(--ink);
+    color:var(--white);
+  }
+  .pill.selected.accent-pill{
+    background:var(--accent);
+    border-color:var(--accent);
+  }
+
+  .booking-summary{
+    border-top:1px solid var(--paper-line);
+    padding-top:20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:16px;
+  }
+  .booking-summary .summary-text{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+  .booking-summary .summary-text strong{
+    color:var(--ink);
+    font-weight:600;
+  }
+
+  .confirm-button{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    background:var(--ink);
+    color:var(--white);
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:0.95rem;
+    text-decoration:none;
+    padding:14px 24px;
+    border-radius:2px;
+    white-space:nowrap;
+    transition:background 0.15s ease;
+  }
+  .confirm-button.ready{background:var(--accent);}
+  .confirm-button.ready:hover{background:var(--accent-dark);}
+  .confirm-button[aria-disabled="true"]{
+    pointer-events:none;
+    opacity:0.5;
+  }
+
+  /* ===== WHATSAPP ===== */
+  .wa-card{
+    border:1px solid var(--paper-line);
+    background:var(--white);
+    padding:32px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:32px;
+    align-items:center;
+  }
+  @media (max-width:720px){
+    .wa-card{grid-template-columns:1fr;}
+  }
+  .wa-card h3{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:1.3rem;
+    margin-bottom:12px;
+  }
+  .wa-card p{color:var(--ink-soft);font-size:0.95rem;margin-bottom:8px;}
+
+  .checklist{
+    list-style:none;
+    margin-top:16px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+  }
+  .checklist li{
+    padding:8px 0 8px 28px;
+    border-top:1px solid var(--paper-line);
+    position:relative;
+    color:var(--ink);
+  }
+  .checklist li:first-child{border-top:none;}
+  .checklist li::before{
+    content:'›';
+    position:absolute;
+    left:6px;
+    color:var(--accent);
+    font-weight:700;
+  }
+
+  .wa-button{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    background:var(--accent);
+    color:var(--white);
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:1rem;
+    text-decoration:none;
+    padding:16px 28px;
+    border-radius:2px;
+    transition:background 0.15s ease, transform 0.1s ease;
+    width:100%;
+  }
+  .wa-button:hover{background:var(--accent-dark);}
+  .wa-button:active{transform:scale(0.99);}
+  .wa-button svg{flex-shrink:0;}
+
+  .wa-note{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--ink-soft);
+    margin-top:14px;
+    text-align:center;
+    letter-spacing:0.04em;
+  }
+
+  /* ===== FOOTER ===== */
+  footer{
+    border-top:1px solid var(--paper-line);
+    padding:32px 24px;
+    max-width:var(--max);
+    margin:0 auto;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.08em;
+    color:var(--ink-soft);
+    text-transform:uppercase;
+  }
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:2px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+  <!-- ===== HERO ===== -->
+  <div class="hero">
+    <span class="tag">Diagnostic gratuit — 30 min</span>
+    <h1>Pose les fondations de ton <span class="accent">business digital</span>.</h1>
+    <p class="lead">
+      Réserve un créneau, dis-moi où tu es bloqué, et on construit ensemble le plan
+      pour faire passer ton activité au niveau supérieur — sans blabla, juste un plan d'action concret.
+    </p>
+
+    <!-- Signature blueprint diagram -->
+    <div class="diagram">
+      <svg viewBox="0 0 880 220" xmlns="http://www.w3.org/2000/svg">
+        <!-- baseline -->
+        <line x1="20" y1="180" x2="860" y2="180" stroke="#1b3a5c" stroke-width="1" stroke-opacity="0.25"/>
+
+        <!-- Phone / call shape -->
+        <rect x="60" y="40" width="120" height="150" rx="14" fill="none" stroke="#1b3a5c" stroke-width="1.5"/>
+        <circle cx="120" cy="160" r="6" fill="none" stroke="#1b3a5c" stroke-width="1.5"/>
+        <line x1="80" y1="58" x2="160" y2="58" stroke="#1b3a5c" stroke-width="1" stroke-opacity="0.4"/>
+
+        <!-- dimension line: appel -->
+        <line x1="60" y1="205" x2="180" y2="205" stroke="#ff6a3d" stroke-width="1.5"/>
+        <line x1="60" y1="200" x2="60" y2="210" stroke="#ff6a3d" stroke-width="1.5"/>
+        <line x1="180" y1="200" x2="180" y2="210" stroke="#ff6a3d" stroke-width="1.5"/>
+        <text x="120" y="218" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#e0511f">30 MIN — APPEL</text>
+
+        <!-- arrow -->
+        <line x1="200" y1="115" x2="280" y2="115" stroke="#1b3a5c" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <polygon points="280,110 292,115 280,120" fill="#1b3a5c"/>
+
+        <!-- Document / plan shape -->
+        <rect x="310" y="40" width="130" height="150" fill="none" stroke="#1b3a5c" stroke-width="1.5"/>
+        <line x1="328" y1="65" x2="420" y2="65" stroke="#1b3a5c" stroke-width="1" stroke-opacity="0.5"/>
+        <line x1="328" y1="85" x2="420" y2="85" stroke="#1b3a5c" stroke-width="1" stroke-opacity="0.5"/>
+        <line x1="328" y1="105" x2="395" y2="105" stroke="#1b3a5c" stroke-width="1" stroke-opacity="0.5"/>
+        <circle cx="334" cy="135" r="3" fill="#ff6a3d"/>
+        <line x1="345" y1="135" x2="420" y2="135" stroke="#1b3a5c" stroke-width="1" stroke-opacity="0.5"/>
+        <circle cx="334" cy="155" r="3" fill="#ff6a3d"/>
+        <line x1="345" y1="155" x2="410" y2="155" stroke="#1b3a5c" stroke-width="1" stroke-opacity="0.5"/>
+
+        <line x1="310" y1="205" x2="440" y2="205" stroke="#ff6a3d" stroke-width="1.5"/>
+        <line x1="310" y1="200" x2="310" y2="210" stroke="#ff6a3d" stroke-width="1.5"/>
+        <line x1="440" y1="200" x2="440" y2="210" stroke="#ff6a3d" stroke-width="1.5"/>
+        <text x="375" y="218" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#e0511f">1 PLAN D'ACTION</text>
+
+        <!-- arrow -->
+        <line x1="460" y1="115" x2="540" y2="115" stroke="#1b3a5c" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <polygon points="540,110 552,115 540,120" fill="#1b3a5c"/>
+
+        <!-- Rocket / growth shape -->
+        <path d="M620 190 L620 110 Q620 60 660 40 Q700 60 700 110 L700 190 Z" fill="none" stroke="#1b3a5c" stroke-width="1.5"/>
+        <circle cx="660" cy="100" r="10" fill="none" stroke="#1b3a5c" stroke-width="1.5"/>
+        <line x1="615" y1="190" x2="600" y2="210" stroke="#1b3a5c" stroke-width="1.5"/>
+        <line x1="705" y1="190" x2="720" y2="210" stroke="#1b3a5c" stroke-width="1.5"/>
+
+        <line x1="590" y1="205" x2="730" y2="205" stroke="#ff6a3d" stroke-width="1.5"/>
+        <line x1="590" y1="200" x2="590" y2="210" stroke="#ff6a3d" stroke-width="1.5"/>
+        <line x1="730" y1="200" x2="730" y2="210" stroke="#ff6a3d" stroke-width="1.5"/>
+        <text x="660" y="218" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#e0511f">0 BLABLA</text>
+
+        <!-- annotation top right -->
+        <text x="860" y="30" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="11" fill="#4a7ba6">FIG. 01 — SCHÉMA DE SESSION</text>
+      </svg>
+    </div>
+    <div class="diagram-caption">Échelle non contractuelle — résultats réels uniquement</div>
+  </div>
+
+  <!-- ===== COMMENT ÇA MARCHE ===== -->
+  <section>
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2>Comment ça marche</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="n">ÉTAPE A</span>
+        <h3>Tu réserves ton créneau</h3>
+        <p>Choisis le moment qui t'arrange dans le calendrier ci-dessous. Confirmation immédiate par e-mail.</p>
+      </div>
+      <div class="step">
+        <span class="n">ÉTAPE B</span>
+        <h3>Tu prépares le terrain sur WhatsApp</h3>
+        <p>Un message pré-rempli s'ouvre avec quelques questions. Réponds-y pour qu'on arrive direct dans le concret.</p>
+      </div>
+      <div class="step">
+        <span class="n">ÉTAPE C</span>
+        <h3>On construit ton plan</h3>
+        <p>Pendant l'appel, on regarde ta situation et on définit les actions prioritaires pour ton business digital.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RÉSERVATION ===== -->
+  <section id="reserver">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2>Réserve ton créneau</h2>
+    </div>
+
+    <div class="booking-frame">
+      <div class="label-bar">
+        <span>Choisis ton créneau</span>
+        <span class="dur">30 min</span>
+      </div>
+
+      <div class="booking-body">
+        <span class="picker-label">Jour</span>
+        <div class="day-row" id="day-row"></div>
+
+        <span class="picker-label">Heure</span>
+        <div class="slot-row" id="slot-row"></div>
+
+        <div class="booking-summary">
+          <div class="summary-text" id="summary-text">Sélectionne un jour et une heure pour continuer.</div>
+          <a class="confirm-button" id="confirm-button" href="#whatsapp" aria-disabled="true">Confirmer sur WhatsApp</a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function(){
+        const days = [
+          { label: 'Lun.', date: null },
+          { label: 'Mar.', date: null },
+          { label: 'Mer.', date: null },
+          { label: 'Jeu.', date: null },
+          { label: 'Ven.', date: null }
+        ];
+
+        // Build the next 5 weekdays (Mon-Fri) starting from tomorrow
+        const today = new Date();
+        let found = [];
+        let d = new Date(today);
+        while(found.length < 5){
+          d.setDate(d.getDate() + 1);
+          const day = d.getDay();
+          if(day !== 0 && day !== 6){
+            found.push(new Date(d));
+          }
+        }
+
+        const slots = ['09h00','11h00','14h00','16h00','17h30'];
+        const dayLabels = ['Dim.','Lun.','Mar.','Mer.','Jeu.','Ven.','Sam.'];
+        const monthLabels = ['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+
+        const dayRow = document.getElementById('day-row');
+        const slotRow = document.getElementById('slot-row');
+        const summaryText = document.getElementById('summary-text');
+        const confirmBtn = document.getElementById('confirm-button');
+
+        let selectedDay = null;
+        let selectedSlot = null;
+
+        found.forEach(function(date){
+          const btn = document.createElement('button');
+          btn.className = 'pill';
+          btn.type = 'button';
+          btn.textContent = dayLabels[date.getDay()] + ' ' + date.getDate() + ' ' + monthLabels[date.getMonth()];
+          btn.dataset.value = dayLabels[date.getDay()] + ' ' + date.getDate() + ' ' + monthLabels[date.getMonth()];
+          btn.addEventListener('click', function(){
+            document.querySelectorAll('#day-row .pill').forEach(p => p.classList.remove('selected'));
+            btn.classList.add('selected');
+            selectedDay = btn.dataset.value;
+            updateSummary();
+          });
+          dayRow.appendChild(btn);
+        });
+
+        slots.forEach(function(time){
+          const btn = document.createElement('button');
+          btn.className = 'pill';
+          btn.type = 'button';
+          btn.textContent = time;
+          btn.addEventListener('click', function(){
+            document.querySelectorAll('#slot-row .pill').forEach(p => p.classList.remove('selected'));
+            btn.classList.add('selected');
+            selectedSlot = time;
+            updateSummary();
+          });
+          slotRow.appendChild(btn);
+        });
+
+        function updateSummary(){
+          if(selectedDay && selectedSlot){
+            summaryText.innerHTML = 'Créneau choisi : <strong>' + selectedDay + ' à ' + selectedSlot + '</strong>';
+            confirmBtn.classList.add('ready');
+            confirmBtn.removeAttribute('aria-disabled');
+
+            const message = "Salut Mathis 👋 Je voudrais réserver le créneau du " + selectedDay + " à " + selectedSlot + " pour le diagnostic de mon business digital.\n\nVoici mon récap avant notre appel :\n\n1️⃣ Mon activité actuelle : \n2️⃣ Mon objectif principal pour les 3 prochains mois : \n3️⃣ Mon plus gros blocage aujourd'hui : \n4️⃣ Mon budget disponible pour un accompagnement : ";
+            confirmBtn.href = "https://wa.me/33675372089?text=" + encodeURIComponent(message);
+            confirmBtn.target = "_blank";
+            confirmBtn.rel = "noopener";
+          } else {
+            summaryText.textContent = 'Sélectionne un jour et une heure pour continuer.';
+            confirmBtn.classList.remove('ready');
+            confirmBtn.setAttribute('aria-disabled','true');
+            confirmBtn.href = '#';
+          }
+        }
+      })();
+    </script>
+  </section>
+
+  <!-- ===== WHATSAPP PRE-CLOSING ===== -->
+  <section id="whatsapp">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2>Avant l'appel, on prépare le terrain</h2>
+    </div>
+
+    <div class="wa-card">
+      <div>
+        <h3>Réponds à 4 questions sur WhatsApp</h3>
+        <p>Ça me permet de préparer ton plan avant même qu'on s'appelle. Le message est déjà rédigé, tu n'as plus qu'à compléter et envoyer.</p>
+        <ul class="checklist">
+          <li>Ton activité actuelle</li>
+          <li>Ton objectif principal pour les 3 prochains mois</li>
+          <li>Ton plus gros blocage aujourd'hui</li>
+          <li>Ton budget disponible pour un accompagnement</li>
+        </ul>
+      </div>
+
+      <div>
+        <a class="wa-button" href="https://wa.me/33675372089?text=Salut%20Mathis%20%F0%9F%91%8B%20J%27ai%20r%C3%A9serv%C3%A9%20un%20cr%C3%A9neau%20pour%20le%20diagnostic%20de%20mon%20business%20digital.%0A%0AVoici%20mon%20r%C3%A9cap%20avant%20notre%20appel%20%3A%0A%0A1%EF%B8%8F%E2%83%A3%20Mon%20activit%C3%A9%20actuelle%20%3A%20%0A2%EF%B8%8F%E2%83%A3%20Mon%20objectif%20principal%20pour%20les%203%20prochains%20mois%20%3A%20%0A3%EF%B8%8F%E2%83%A3%20Mon%20plus%20gros%20blocage%20aujourd%27hui%20%3A%20%0A4%EF%B8%8F%E2%83%A3%20Mon%20budget%20disponible%20pour%20un%20accompagnement%20%3A%20" target="_blank" rel="noopener">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.85.5 3.59 1.42 5.12L2 22l5.13-1.5a9.86 9.86 0 0 0 4.91 1.31h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.13-2.91-7C17.13 3.03 14.69 2 12.04 2zm0 18.06h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.05.89.91-2.97-.2-.31a8.2 8.2 0 0 1-1.27-4.43c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.55-3.7 8.24-8.25 8.24zm4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.78.97-.14.17-.29.18-.53.06-1.45-.72-2.4-1.29-3.36-2.92-.25-.43.25-.4.72-1.33.08-.17.04-.31-.03-.43-.08-.12-.5-1.2-.69-1.65-.18-.43-.37-.37-.5-.38-.13-.01-.28-.01-.43-.01-.15 0-.39.06-.6.31-.2.25-.78.77-.78 1.85 0 1.09.79 2.14.9 2.29.11.14 1.53 2.34 3.72 3.18 1.84.71 2.21.59 2.61.55.4-.04 1.31-.54 1.49-1.06.18-.51.18-.95.13-1.05-.05-.1-.19-.16-.44-.27z"/>
+          </svg>
+          Ouvrir WhatsApp et envoyer mon récap
+        </a>
+        <div class="wa-note">Le message est pré-rempli — il suffit de compléter les blancs</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Diagnostic business digital</span>
+    <span>Réponse sous 24h ouvrées</span>
+  </footer>
+
+</body>
+</html>
